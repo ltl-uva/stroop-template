@@ -1,0 +1,366 @@
+%%% common.tex
+%
+% This file  the example usage, writing suggestions, best practices, etc.
+% it is included inside paper-acl.tex, paper-jmlr.tex, etc.
+% Like stroop.sty, this file is based on
+%%% NERT lab (http://nert.georgetown.edu/) stylesheet
+%%% Created by Nathan Schneider
+%%% Feel free to use, modify, and share.
+%%% https://www.overleaf.com/project/5db4fd68be57c00001336e73
+
+\section{Introduction}
+This is an example document produced with a stylesheet from
+ACL-organized conferences (ACL, NAACL, EACL, AACL, EMNLP, and
+colocated conferences/workshops).
+The customizations in stroop.sty (activated by \verb|\usepackage{stroop}| above)
+will make your life easier and your paper more attractive.
+
+\section{Getting started}
+
+\begin{enumerate}
+    \item Find the submission instructions and stylesheet for the venue you are submitting to. It should be linked from the call for papers or available as an Overleaf template.
+    \item This template uses acl2020.sty. Substitute the venue-appropriate file, and update the line \verb|\usepackage[hyperref]{acl2020}| above to match.
+    \item Double-check the paper size: some venues require Letter, others A4.
+    Specify above in the \verb|\documentclass| command.
+    \item Rename mypaper.tex and mypaper.bib to use a short, memorable identifier based on the topic of the paper so it is easy to search for the file on your computer. E.g., for your paper ``COOKIE: Corpus Of Ontological Knowledge for Information Extraction'', you might use cookiecorpus.tex and \mbox{cookiecorpus.bib}. Update \verb|\bibliography{mypaper}| to point to the .bib file.
+    \item Author names under the title will be hidden until \verb|\aclfinalcopy| is uncommented.
+    \item If using Overleaf, consider activating the built-in Git repository for your paper. Clone the repository to your machine so you can edit offline. Every time you \verb|git pull| it will generate and download a commit for all new changes made in the web interface. Even if you are not editing locally, it is good to make frequent backups in case something goes awry.
+\end{enumerate}
+
+\section{Working in drafts}
+
+\paragraph{Notes.}
+In stroop.sty there are commands for you to leave notes with your initials:
+\vn{Vlad},
+\gc{Gon\c{c}alo}
+At submission time, you can hide them by uncommenting
+\verb|\renewcommand{\nertcomment}[4]{\unskip}| before the start of the document.
+
+You can also use Overleaf's commenting feature, but these comments will not be printed in the draft.
+
+\paragraph{Document versions.}
+There are macros you can use to turn certain content on or off
+depending on a particular stage in the lifecycle of the paper:
+\begin{itemize}
+    \item \verb|\draftversion{...}| for content that goes in internal drafts, \verb|\subversion{...}| for the official submission, \verb|\finalversion{...}| for the final version
+    \item \verb|\anonversion{...}| for when the paper is anonymized,
+    \verb|\nonanonversion{...}| for when it isn't
+    \item Length alternatives for working within a page limit:\\ \verb|\shortversion{...}|, \verb|\longversion{...}|, \verb|\shortlong{short...}{long...}|, \verb|\considercutting{...}|
+\end{itemize}
+Edit the macro definitions in \verb|stroop.sty| to control which will display
+their contents and which will be hidden
+(they are independent of \verb|\aclfinalcopy|).
+
+\section{Bibliography and citations}\label{sec:bib}
+
+\paragraph{Bibliography.}
+I recommend creating a fresh .bib file specifically for each paper you write.
+If you curate citation info in a reference manager, you can export the relevant
+citations as Bibtex
+(Zotero users, see \url{https://gist.github.com/nschneid/2257875} for customizing
+how Bibtex entries are created).
+The \href{https://www.aclweb.org/anthology/}{ACL Anthology} generally has high-quality .bib entries.
+Entries should include URLs where possible.
+
+By default, only papers cited at least once will appear under \textbf{References}.\footnote{\label{fn:emptybib}If your paper has an empty .bib file or no citations, compiling will trigger the error \texttt{Something's wrong-{}-perhaps a missing \textbackslash item}.}
+If you want to circumvent this and force rendering of all entries in the
+included bibfile, use \verb|\nocite{*}|, and to include only specific bib keys
+use \verb|\nocite{key1,key2}|. If you think you need to do this, think twice --
+this should only be used, \eg, if you want to generate a list of all your
+papers.
+
+Pay special attention to \textbf{capitalization in titles}:
+by default, the ACL stylesheet will lowercase all characters except the first in the title.
+
+\paragraph{Citations.}
+For ACL, ICML, JMLR, and many others,
+citation commands are based on the \href{http://tug.ctan.org/macros/latex/contrib/natbib/natbib.pdf}{\texttt{natbib}} package, including
+\verb|\citep| for parenthesized citations (authors in parentheses),
+\verb|\citet| for textual citations (authors before parentheses),
+\verb|\citeposs| for textual citations with a possessive author, and
+\verb|\citealp| for citations without any parentheses.
+Use capitalized equivalents (e.g., \verb|\Citet|) at the beginning
+of a sentence. Optional square brackets specify extra material to put at the beginning or end within the parentheses.
+For example:
+
+\begin{quote}
+\Citet{blodgett-18} provided a technique that has been adapted in subsequent work on English \citep{schneider-18,prange-19} and extended to other languages \citep[e.g.,][]{zhu-19}.
+Current practice is detailed in the latest guidelines \citep[pp.~77--78]{snacs}.
+\Citeposs{manning-19} system adopts a different approach.
+\end{quote}
+
+\section{Cross-references}\label{sec:xref}
+
+Units of your document---including sections, numbered linguistic examples,
+tables, and figures---can be labeled for cross-referencing.
+This is advisable in case the structure of your document changes.
+It is recommended to use consistent prefixes in your labels:
+\verb|\label{fig:myfigure}|, \verb|\label{tab:mytable}|,
+\verb|\label{sec:mysection}|, \verb|\label{ex:myexample}|,
+\verb|\label{fn:myfootnote}|, etc.\footnote{\label{fn:captions}Note that
+table and figure labels must go inside or after the \texttt{\textbackslash caption} command.}
+
+{\bfseries Please use the \verb|\cref| command (based on the \href{http://tug.ctan.org/macros/latex/contrib/cleveref/cleveref.pdf}{\texttt{cleveref}} package) for cross-references.}
+It will automatically display the number with the word ``figure'' or ``table'',
+the section symbol (\S), or other formatting as appropriate.
+It supports a comma-separated list of multiple cross-references of the same type.
+Capitalize as \verb|\Cref| at the beginning of a sentence.
+For example:
+
+\begin{quote}
+\Cref{fn:captions} provides an important addendum. Cross-references and linguistic examples are discussed herein (\cref{sec:xref,sec:ling}).
+\end{quote}
+
+\section{Linguistic examples}\label{sec:ling}
+
+For most purposes, the \href{http://texdoc.net/texmf-dist/doc/latex/linguex/linguex-doc.pdf}{\texttt{linguex}} package provides the simplest commands
+for numbered linguistic examples. They look like this:
+
+\ex.\label{ex:first} Here is an example.
+
+\ex.\label{ex:second} Here is another one.
+    \a. It has a subpart.
+    \b.\label{ex:subpart2} And a subsequent subpart.
+        \a.\label{ex:subsubpart} with its own subpart
+        \z.
+    \b.\label{ex:subpart3} And so on.
+    \b.\label{ex:subpart4} And so forth.
+
+The cross-referencing commands (\cref{sec:xref}) will work: \cref{ex:second}, \cref{ex:subsubpart}, \cref{ex:subpart2,ex:subpart3,ex:subpart4}.
+Glosses are also supported; see the \href{http://mirrors.ctan.org/macros/latex/contrib/linguex/doc/linguex-doc.pdf}{package documentation} for details.
+
+stroop.sty defines a few macros for linguistic notation:
+\sst{Supersense}, \psst{SNACSSupersense}, \rf{Role}{Function};
+boxed numbers \svar{1}, \SVAR{2}; etc.
+It also provides dingbats (\chk~\xxx) and special character aliases (\backtick~\tat).
+
+\section{Style}
+
+There are many places you can go for \LaTeX{} typesetting tips.
+A few guidelines of particular note are listed below.
+
+\subsection{Text}
+
+\begin{itemize}
+    \item Look carefully at ``quotes'' to ensure they're curly and going in the right direction. ''BAD"
+    \item With \texttt{fnpct}, all footnotes appear \emph{after} post-word punctuation like periods and commas.
+    It feels illogical,\footnote{not logical}
+    but the other way looks ugly.
+    \item Note the placement of periods in the following abbreviations:
+    \begin{quote}
+    e.g. `for example, \dots'\\
+    i.e. `that is, \dots'\\
+    cf. `compare'
+    \end{quote}
+    These abbreviations should always precede the thing they are modifying.
+    \item If not followed by a comma or colon, non--sentence-final abbreviations including
+    \emph{e.g.}, \emph{i.e.}, \emph{cf.}, \emph{p.}, \emph{vs.}, and \emph{etc.}\
+    should be separated from the next word in the sentence by a tilde (\texttt{\tat}) or backslash+space.\footnote{The difference between these is that the tilde prevents a line break. The tilde is ideal for \emph{e.g.}, \emph{i.e.}, \emph{cf.}, and \emph{p.}, which are essentially prefixes and should not appear at the end of a line.} This is to prevent \LaTeX{} from thinking it's the end of a sentence and adding a bit of extra space.\footnote{Because an end-of-sentence period may be followed by a close parenthesis or close quote, this policy applies for parenthesized or quoted ``abbrevs.''\ as well.} Compare:
+
+    \begin{quote}
+    E.g. preps. (and postps.) are the best (UNEVENLY SPACED)
+
+    E.g.~preps.\ (and postps.)\ are the best (EVENLY SPACED)
+    \end{quote}
+    \item Dashes are wider than hyphens and serve a different function.
+    For numeric ranges, use \verb|--|, which typesets an \emph{en~dash}.
+    For phrase separation similar to a colon or parentheses, use \verb|---|,
+    which typesets an \emph{em~dash}. In \verb|stroop.sty| these are not separated by spaces:
+
+    \begin{quote}
+    pp.~5--10
+    \end{quote}
+    \begin{quote}
+    ADPs---e.g., \p{in}, \p{at}, and \p{for}---are highly frequent in English.
+    \end{quote}
+    \item For textual lists of three or more items, StroopNLP uses the serial (Oxford) comma before the conjunction, as in the above example.
+    \item If not in an equation or formula, typeset the numerical part outside of math mode, but numerical modifier symbols \emph{in} math mode to distinguish them from textual punctuation:
+
+    \begin{quote}
+    between $-$86.3 and $+$92.7
+    \end{quote}
+
+    Use math symbol \verb|\approx|, not \verb|~|, for approximate quantities:
+
+    \begin{quote}
+    $\approx$100 minutes
+    \end{quote}
+\end{itemize}
+
+See also the \href{http://cljournal.org/style_guide_general.html}{style guide} for the \emph{Computational Linguistics} journal.
+
+\subsection{Math}
+
+\begin{itemize}
+\item Never say something is obvious, clear, etc.
+\item Equations are a part of text: always end them with the correct
+punctuation. For full-line equation, leave a small space before the
+punctuation, like this:
+\[ \sigma(t) = \frac{1}{1+\exp(-t)}\,. \]
+\item Never write words in math mode without wrapping them in one of
+\verb|\text|,
+\verb|\operatorname|,
+\verb|\mathrm|,
+or similar.
+In particular, don't use math mode for
+italic effect, use \verb|\textit|:
+\[ \text{wrong: } x_{function} \qquad \text{right: } x_\textit{function}\,. \]
+Notice the spacing around the \emph{f} and \emph{t}.
+\LaTeX{} interprets a string like \verb|$function$| as the product of
+a bunch of variables $f \times u \times n \times \ldots$.
+The correct way to typeset words depends on the semantics:
+\begin{itemize}
+\item Actual narrative text should be written inside \verb|\text|,
+which inherits the properties of the surrounding environment. For example:
+
+\[ p_i = \frac{\exp x_i}{Z}\,,
+\quad \text{where} \quad
+Z=\sum_i \exp x_i\,.\]
+
+\begin{theorem}
+The normalized probabilities are given by
+\[ p_i = \frac{\exp x_i}{Z}\,,
+\quad \text{where} \quad
+Z=\sum_i \exp x_i\,.\]
+\end{theorem}
+\item Operators like $\exp$ should use builtins if available, or
+otherwise, should be declared with \verb|\operatorname| and,
+if repeated more than once, should be declared in the preamble using
+\verb|\DeclareMathOperator|:
+\[\bm{p} = \operatorname{softmax}(\bm{x})\,.\]
+\item Other objects that should be typeset as text should use \verb|\mathrm|,
+for instance the volume unit, \eg, $\mathrm{d}x$,
+or units of measurement, \eg, $h=28\mathrm{cm}$.
+However, for the volume unit specifically, \verb|stroop.sty|
+provides \verb|\dif| which better handles spacing;
+for units, use the package \verb|siunitx|.
+\end{itemize}
+
+\item \Citet{typesetting-math} provide key tips for how to use mathematical notation
+in NLP and machine learning.
+There is also an overview of available math symbols and environments  \citep{downes-17}.
+The advice here, however, takes precedence when overlapping. (For instance,
+\citet{typesetting-math} wrongly suggests typesetting operator names using \verb|\mathrm| instead of \verb|\OperatorName|,
+which leads to slightly incorrect spacing.
+\end{itemize}
+
+Alphabet example:
+
+\[ \bm{u} \equiv (\bm{x}, x) \in \cS \coloneqq \bbR^d \times \bbZ \]
+
+\subsection{Tables and figures}
+
+\begin{itemize}
+    \item Contents of tables and figures can use small font.
+    \item Table and figure captions should be informative, explaining important abbreviations, measures, and experimental conditions.
+    \item Tables should minimize visual distraction due to rules between rows and columns; usually vertical rules are unnecessary and a bit of extra space between groups of rows can suffice. See \cref{tab:numtbl}.
+    \item When entering numbers into a table, take care that they are aligned flush right and use a consistent number of digits after the decimal point.
+    Usually percent (\%) signs are unnecessary in the table provided that it is clear what the columns mean.\\ \hspace*{10pt} The column header should be centered relative to the numbers.
+    For a wide column whose values have different numbers of digits, you can fake this by centering the column and specifying \verb|\hphantom{0}| or similar before shorter values (\cref{tab:numtbl}).
+    \item Column specifier \texttt{H} will create a hidden column in a \texttt{tabular}.
+\end{itemize}
+
+\begin{table}
+    \centering\small
+    \begin{tabular}{lrcH}
+    \textbf{Method} & \multicolumn{1}{c}{$F_1$} & \textbf{OOV Recall} \\
+      \midrule
+        Baseline & 66.3 & \hphantom{1}9.5 & xxx-I-am-hidden-xxx \\
+        SVM & 68.0 & \hphantom{1}9.8 \\
+        MLP & 72.2 & 14.0 \\[3pt]
+        Rule-based system (RB) & 56.2 & \hphantom{1}9.1 \\
+        RB + SVM & 70.9 & \textbf{18.5} \\
+        RB + MLP & \textbf{74.8} & 18.4 \\
+    \end{tabular}
+    \caption{Dev set performance of systems using default hyperparameters: overall $F$-score percentages and out-of-vocabulary word recall percentages. The highest value in each column is bolded.}
+    \label{tab:numtbl}
+\end{table}
+
+\section{Graphics}
+
+
+Wherever possible, images should be encoded as \href{https://simple.wikipedia.org/wiki/Vector_graphics}{vector graphics}
+(typically achieved by exporting to PDF or SVG rather than PNG, TIFF, GIF, or JPEG) to allow for resizing and zooming without loss of resolution.
+Graphics can also be generated with \LaTeX{} packages such as \href{https://en.wikibooks.org/wiki/LaTeX/PGF/TikZ}{TikZ}.
+Color palettes should be colorblind-friendly (e.g., \href{https://personal.sron.nl/~pault/data/colourschemes.pdf}{Paul Tol's color schemes}).
+
+\section{Writing}
+
+\subsection{Word choice}
+
+The expressions in \cref{tab:conv} sound highly conversational or ungrammatical and should be avoided in academic writing.
+The expressions in \cref{tab:wrongimpression} should be used to avoid giving the reader the wrong impression.
+
+\begin{table}[t]
+\begin{center}\small
+\begin{tabular}{>{\raggedright}p{9em}>{\raggedright}p{12em}H}
+\toprule
+\textbf{Avoid} & \textbf{Instead use} & \\
+\midrule
+\tablehead{\toprule
+\textbf{Avoid} & \textbf{Instead use} & \\
+}
+\tabletail{\bottomrule}
+a lot of & much \newline many \newline considerable \newline a great deal of & \\
+\midrule
+Besides, & In addition, \newline Additionally, & \\
+\midrule
+Following, & Next, \newline Additionally, \newline \emph{(OK after ``the'': “the following contributions”)} & \\
+\midrule
+nowadays \newline these days \newline lately & currently \newline recently \newline \emph{(or rephrase with an adjective: “current/contemporary approaches”)} & \\
+\midrule
+allows to & allows us to \newline permits \newline facilitates & \\
+\midrule
+many works & much work \newline many studies & \\
+\midrule
+in this research, we\dots & in this paper\slash study\slash work\newline (\emph{``research'' usually refers to a body of research})
+& \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{\label{tab:conv}Phrasing to avoid conversational style.}
+\end{table}
+
+
+\begin{table}[t]
+\begin{center}\small
+\begin{tabular}{>{\raggedright}p{10.5em}>{\raggedright}p{10.516em}H}
+\toprule
+\textbf{Avoid} & \textbf{Instead use} & \\
+\midrule
+we prove that \newline \emph{(if no mathematical proof)} & we show\slash demonstrate\slash argue\slash offer evidence that & \\
+\midrule
+significantly improves\newline significant improvement\newline significantly better \newline \emph{(if no test showing statistical significance)} & substantially improves \newline greatly improves \newline substantial improvement \newline substantially better & \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{\label{tab:wrongimpression}Phrasing to avoid giving the reader the wrong impression.}
+\end{table}
+
+
+\subsection{Organization and other considerations}
+
+\begin{itemize}
+\item Is That Footnote Really Necessary?
+
+\item \Citeauthor{writing-well}'s presentation is an excellent starting point
+for advice on how to write a clear and effective paper.
+
+\end{itemize}
+
+\subsection{Algorithms and Code}\label{sec:algo}
+
+\begin{algorithm}[t]
+\begin{algorithmic}[1]
+\STATE $i\gets 10$
+\IF {$i\geq 5$}
+  \STATE $i\gets i-1$
+  \STATE $i\gets i^2$ \COMMENT{hi}
+\ELSE
+  \IF {$i\leq 3$}
+    \STATE $i\gets i+2$
+  \ENDIF
+\ENDIF
+\end{algorithmic}
+\caption{Example algorithm. \label{algo:rhythm}}
+\end{algorithm}

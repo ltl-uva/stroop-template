@@ -1,0 +1,46 @@
+\pdfoutput=1 % ensure pdflatex (for arXiv)
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{acl}
+\usepackage[times]{stroop}
+%\renewcommand{\UrlFont}{\ttfamily\small}
+
+\title{StroopNLP Template}
+
+%%%% Example of how to typeset author names, institutions, emails
+
+\author{%
+Evgeniia Tokarchuk \qquad
+Vlad Niculae \qquad
+Christof Monz \\
+Language Technology Lab, University of Amsterdam\\
+\{
+\emldisplay{e.tokarchuk@uva.nl}{e.tokarchuk},~
+\emldisplay{v.niculae@uva.nl}{v.niculae},~
+\emldisplay{c.monz@uva.nl}{c.monz}
+\}\texttt{@uva.nl}
+\AND
+Tsvetomila Mihaylova \\
+University of Lisbon, Portugal \\
+\eml{tsvetomila.mihaylova@lx.it.pt}
+\And
+Tsvetomila Mihaylova \\
+University of Lisbon, Portugal \\
+\eml{tsvetomila.mihaylova@lx.it.pt}
+}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+ACL example paper.
+\end{abstract}
+
+\input{common.tex}
+
+\bibliography{sample}
+\bibliographystyle{acl_natbib}
+
+% \appendix
+
+\end{document}

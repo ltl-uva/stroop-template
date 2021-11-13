@@ -1,0 +1,36 @@
+\pdfoutput=1 % ensure pdflatex (for arXiv)
+
+\documentclass[twoside,11pt,a4paper]{article}
+\usepackage[preprint]{jmlr2e}
+\usepackage[times]{stroop}
+
+\title{StroopNLP JMLR example}
+
+%%%% Example of how to typeset author names, institutions, emails
+
+\editor{n/a}
+\author{%
+\name Vlad Niculae
+\email \eml{v.niculae@uva.nl}\\
+\addr Language Technology Lab,
+Informatics Institute,
+University of Amsterdam
+}
+ %\\
+%}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+This is a demonstration of the StroopNLP style within the jmlr2e template.
+The content below is shared across all similar files in this repository.
+\end{abstract}
+
+\input{common.tex}
+
+\bibliography{sample}
+
+% \appendix
+
+\end{document}
