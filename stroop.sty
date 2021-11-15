@@ -27,12 +27,15 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8x]{inputenc}
 
+\RequirePackage[a-1b]{pdfx}   % for PDF/A-1b
+
 \RequirePackage{xcolor}
 \RequirePackage{relsize}     % relative font sizes (e.g. \smaller). must precede ACL style
 \RequirePackage{hyperref}
 \RequirePackage{microtype}
 \RequirePackage{paralist}    % in-paragraph enumerations
 \RequirePackage{dsfont}
+
 \RequirePackage[shortlabels]{enumitem} % customizable lists
 \RequirePackage{xspace}
 \RequirePackage{xparse}      % for fancy custom macros (\NewDocumentEnvironment, etc.)
@@ -51,7 +54,8 @@
 
 \ProcessOptions*
 \if@strooptimes
-    \RequirePackage{times}
+    \RequirePackage{newtxtext}   % modern Times clone
+    %\usepackage{stickstootext}  b Better, but not compatible
 \fi
 \if@stroopfourier
     \RequirePackage{fouriernc}
@@ -62,20 +66,20 @@
 \RequirePackage{pifont}
 
 \if@strooptimes
-    \RequirePackage{newtxmath}
+    \RequirePackage[stickstoo,varbb]{newtxmath}
 \else
     \RequirePackage{mathtools}
-    \RequirePackage{amssymb}	%amsfonts,eucal,amsbsy,amsthm,amsopn
+    \RequirePackage{amssymb}
     \RequirePackage{amsmath}
 \fi
 
 
 \RequirePackage[scaled=.8]{beramono}
-\RequirePackage[scaled=.85]{helvet}
+%\RequirePackage[scaled=.85]{helvet}
+\RequirePackage[defaultsans,scale=.88]{opensans}
 \RequirePackage{nameref}
 \RequirePackage{cleveref}
 \RequirePackage{bm}
-%\usepackage[a-1b]{pdfx}   % for PDF/A-1b
 \RequirePackage{footnote}
 \RequirePackage{fnpct} % footnotes after punctuation
 % Tables
