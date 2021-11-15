@@ -15,3 +15,11 @@ latex style and helpers for ML/NLP papers
 When preparing a submission, please fetch and download the **up-to-date** style
 files from the corresponding venue: the ones here may be outdated.
 
+
+## Acknowledgements
+
+This project is based on 
+[NERT lab's](http://nert.georgetown.edu/) 
+[latex stylesheet](https://www.overleaf.com/project/5db4fd68be57c00001336e73)
+by Nathan Schneider.
+Feel free to use, modify, and share.
