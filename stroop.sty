@@ -25,7 +25,7 @@
 
 %% IMPORTS
 \RequirePackage[T1]{fontenc}
-\RequirePackage[utf8x]{inputenc}
+\RequirePackage[utf8]{inputenc}
 
 \RequirePackage[a-1b]{pdfx}   % for PDF/A-1b
 
@@ -44,6 +44,7 @@
 
 \newif\if@strooptimes
 \newif\if@stroopfourier
+\newif\if@stroopnoalg
 
 \DeclareOption{times}{%
     \@strooptimestrue
@@ -51,14 +52,21 @@
 \DeclareOption{fourier}{%
     \@stroopfouriertrue
 }
+\DeclareOption{noalg}{%
+    \@stroopnoalgtrue
+}
 
 \ProcessOptions*
 \if@strooptimes
     \RequirePackage{newtxtext}   % modern Times clone
     %\usepackage{stickstootext}  b Better, but not compatible
+    \RequirePackage[scaled=.8]{beramono}
+    \RequirePackage[defaultsans,scale=.88]{opensans}
 \fi
 \if@stroopfourier
     \RequirePackage{fouriernc}
+    \RequirePackage[scaled=.8]{beramono}
+    \RequirePackage[defaultsans,scale=.88]{opensans}
 \fi
 
 %% Math font packages
@@ -74,9 +82,6 @@
 \fi
 
 
-\RequirePackage[scaled=.8]{beramono}
-%\RequirePackage[scaled=.85]{helvet}
-\RequirePackage[defaultsans,scale=.88]{opensans}
 \RequirePackage{nameref}
 \RequirePackage{cleveref}
 \RequirePackage{bm}
@@ -103,12 +108,13 @@
 \renewcommand{\firstrefdash}{} % don't put a hyphen between example number and subexample letter
 
 % algorithms
+\if@stroopnoalg
+\else
 \RequirePackage{algorithm}
 \RequirePackage[noend]{algorithmic}
 \algsetup{linenosize=\footnotesize\color{gray}}
 \renewcommand{\algorithmiccomment}[1]{\hfill\footnotesize\color{gray}{\# #1}}
-%\renewcommand\AlCapFnt{\small}
-%\renewcommand{\UrlFont}{\ttfamily\small}
+\fi
 
 %\usepackage{sidecap} % side captions
 %\usepackage{rotating}	% sideways
@@ -490,60 +496,85 @@
 \newcommand*{\cf}{\textit{cf.}\@\xspace}
 
 % calligraphic sets / manifolds / etc
-\newcommand\cA{{\mathcal{A}}}
-\newcommand\cB{{\mathcal{B}}}
-\newcommand\cC{{\mathcal{C}}}
-\newcommand\cD{{\mathcal{D}}}
-\newcommand\cE{{\mathcal{E}}}
-\newcommand\cF{{\mathcal{F}}}
-\newcommand\cG{{\mathcal{G}}}
-\newcommand\cH{{\mathcal{H}}}
-\newcommand\cI{{\mathcal{I}}}
-\newcommand\cJ{{\mathcal{J}}}
-\newcommand\cK{{\mathcal{K}}}
-\newcommand\cL{{\mathcal{L}}}
-\newcommand\cM{{\mathcal{M}}}
-\newcommand\cN{{\mathcal{N}}}
-\newcommand\cO{{\mathcal{O}}}
-\newcommand\cP{{\mathcal{P}}}
-\newcommand\cQ{{\mathcal{Q}}}
-\newcommand\cR{{\mathcal{R}}}
-\newcommand\cS{{\mathcal{S}}}
-\newcommand\cT{{\mathcal{T}}}
-\newcommand\cU{{\mathcal{U}}}
-\newcommand\cV{{\mathcal{V}}}
-\newcommand\cW{{\mathcal{W}}}
-\newcommand\cX{{\mathcal{X}}}
-\newcommand\cY{{\mathcal{Y}}}
-\newcommand\cZ{{\mathcal{Z}}}
+% neat solution thanks to egreg
 
-% mathbb sets
-\newcommand\bbA{{\mathbb{A}}}
-\newcommand\bbB{{\mathbb{B}}}
-\newcommand\bbC{{\mathbb{C}}}
-\newcommand\bbD{{\mathbb{D}}}
-\newcommand\bbE{{\mathbb{E}}}
-\newcommand\bbF{{\mathbb{F}}}
-\newcommand\bbG{{\mathbb{G}}}
-\newcommand\bbH{{\mathbb{H}}}
-\newcommand\bbI{{\mathbb{I}}}
-\newcommand\bbJ{{\mathbb{J}}}
-\newcommand\bbK{{\mathbb{K}}}
-\newcommand\bbL{{\mathbb{L}}}
-\newcommand\bbM{{\mathbb{M}}}
-\newcommand\bbN{{\mathbb{N}}}
-\newcommand\bbO{{\mathbb{O}}}
-\newcommand\bbP{{\mathbb{P}}}
-\newcommand\bbQ{{\mathbb{Q}}}
-\newcommand\bbR{{\mathbb{R}}}
-\newcommand\bbS{{\mathbb{S}}}
-\newcommand\bbT{{\mathbb{T}}}
-\newcommand\bbU{{\mathbb{U}}}
-\newcommand\bbV{{\mathbb{V}}}
-\newcommand\bbW{{\mathbb{W}}}
-\newcommand\bbX{{\mathbb{X}}}
-\newcommand\bbY{{\mathbb{Y}}}
-\newcommand\bbZ{{\mathbb{Z}}}
+\ExplSyntaxOn
+
+\NewDocumentCommand{\definealphabet}{mmmm}
+ {% #1 = prefix, #2 = command, #3 = start, #4 = end
+  \int_step_inline:nnn { `#3 } { `#4 }
+   {
+    \cs_new_protected:cpx { #1 \char_generate:nn { ##1 }{ 11 } }
+     {
+      \exp_not:N #2 { \char_generate:nn { ##1 } { 11 } }
+     }
+   }
+ }
+
+\ExplSyntaxOff
+
+\definealphabet{bb}{\mathbb}{A}{Z}
+\definealphabet{c}{\mathcal}{A}{Z}
+\definealphabet{mb}{\bm}{A}{Z}
+\definealphabet{mb}{\bm}{a}{z}
+
+%\newcommand\cA{{\mathcal{A}}}
+%\newcommand\cB{{\mathcal{B}}}
+%\newcommand\cC{{\mathcal{C}}}
+%\newcommand\cD{{\mathcal{D}}}
+%\newcommand\cE{{\mathcal{E}}}
+%\newcommand\cF{{\mathcal{F}}}
+%\newcommand\cG{{\mathcal{G}}}
+%\newcommand\cH{{\mathcal{H}}}
+%\newcommand\cI{{\mathcal{I}}}
+%\newcommand\cJ{{\mathcal{J}}}
+%\newcommand\cK{{\mathcal{K}}}
+%\newcommand\cL{{\mathcal{L}}}
+%\newcommand\cM{{\mathcal{M}}}
+%\newcommand\cN{{\mathcal{N}}}
+%\newcommand\cO{{\mathcal{O}}}
+%\newcommand\cP{{\mathcal{P}}}
+%\newcommand\cQ{{\mathcal{Q}}}
+%\newcommand\cR{{\mathcal{R}}}
+%\newcommand\cS{{\mathcal{S}}}
+%\newcommand\cT{{\mathcal{T}}}
+%\newcommand\cU{{\mathcal{U}}}
+%\newcommand\cV{{\mathcal{V}}}
+%\newcommand\cW{{\mathcal{W}}}
+%\newcommand\cX{{\mathcal{X}}}
+%\newcommand\cY{{\mathcal{Y}}}
+%\newcommand\cZ{{\mathcal{Z}}}
+
+%% mathbb sets
+%\newcommand\bbA{{\mathbb{A}}}
+%\newcommand\bbB{{\mathbb{B}}}
+%\newcommand\bbC{{\mathbb{C}}}
+%\newcommand\bbD{{\mathbb{D}}}
+%\newcommand\bbE{{\mathbb{E}}}
+%\newcommand\bbF{{\mathbb{F}}}
+%\newcommand\bbG{{\mathbb{G}}}
+%\newcommand\bbH{{\mathbb{H}}}
+%\newcommand\bbI{{\mathbb{I}}}
+%\newcommand\bbJ{{\mathbb{J}}}
+%\newcommand\bbK{{\mathbb{K}}}
+%\newcommand\bbL{{\mathbb{L}}}
+%\newcommand\bbM{{\mathbb{M}}}
+%\newcommand\bbN{{\mathbb{N}}}
+%\newcommand\bbO{{\mathbb{O}}}
+%\newcommand\bbP{{\mathbb{P}}}
+%\newcommand\bbQ{{\mathbb{Q}}}
+%\newcommand\bbR{{\mathbb{R}}}
+%\newcommand\bbS{{\mathbb{S}}}
+%\newcommand\bbT{{\mathbb{T}}}
+%\newcommand\bbU{{\mathbb{U}}}
+%\newcommand\bbV{{\mathbb{V}}}
+%\newcommand\bbW{{\mathbb{W}}}
+%\newcommand\bbX{{\mathbb{X}}}
+%\newcommand\bbY{{\mathbb{Y}}}
+%\newcommand\bbZ{{\mathbb{Z}}}
+
+\newcommand\ones{\bm{1}}
+\newcommand\zeros{\bm{0}}
 
 % operators
 \newcommand\operstyle[1]{#1}
