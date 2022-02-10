@@ -45,6 +45,7 @@
 \newif\if@strooptimes
 \newif\if@stroopfourier
 \newif\if@stroopnoalg
+\newif\if@stroopspace
 
 \DeclareOption{times}{%
     \@strooptimestrue
@@ -54,6 +55,9 @@
 }
 \DeclareOption{noalg}{%
     \@stroopnoalgtrue
+}
+\DeclareOption{savespace}{%
+    \@stroopspacetrue
 }
 
 \ProcessOptions*
@@ -137,10 +141,19 @@
 \newcommand{\emldisplay}[2]{\texttt{\href{mailto:#1}{#2}}}
 \newcommand{\eml}[1]{\emldisplay{#1}{#1}}
 
-
-% Lists
-\setitemize{noitemsep,topsep=0em} %leftmargin=1em,iciteposstemindent=-1em
-\setenumerate{noitemsep,leftmargin=0em,itemindent=13pt,topsep=0em}
+% turn on space saving
+\if@stroopspace
+    \setitemize{noitemsep,topsep=0em} %leftmargin=1em,iciteposstemindent=-1em
+    \setenumerate{noitemsep,leftmargin=0em,itemindent=13pt,topsep=0em}
+    % customize \paragraph spacing
+    \makeatletter
+    \renewcommand{\paragraph}{%
+      \@startsection{paragraph}{4}%
+      {\z@}{.2ex \@plus 1ex \@minus .2ex}{-1em}%
+      {\normalfont\normalsize\bfseries}%
+    }
+    \makeatother
+\fi
 
 
 % listings: figure out when needed
@@ -365,14 +378,6 @@
 % \setlength{\intextsep}{0pt plus 2pt}   % default value 12pt plus 2pt minus 2pt
 
 
-% customize \paragraph spacing
-\makeatletter
-\renewcommand{\paragraph}{%
-  \@startsection{paragraph}{4}%
-  {\z@}{.2ex \@plus 1ex \@minus .2ex}{-1em}%
-  {\normalfont\normalsize\bfseries}%
-}
-\makeatother
 
 
 
@@ -517,61 +522,6 @@
 \definealphabet{c}{\mathcal}{A}{Z}
 \definealphabet{mb}{\bm}{A}{Z}
 \definealphabet{mb}{\bm}{a}{z}
-
-%\newcommand\cA{{\mathcal{A}}}
-%\newcommand\cB{{\mathcal{B}}}
-%\newcommand\cC{{\mathcal{C}}}
-%\newcommand\cD{{\mathcal{D}}}
-%\newcommand\cE{{\mathcal{E}}}
-%\newcommand\cF{{\mathcal{F}}}
-%\newcommand\cG{{\mathcal{G}}}
-%\newcommand\cH{{\mathcal{H}}}
-%\newcommand\cI{{\mathcal{I}}}
-%\newcommand\cJ{{\mathcal{J}}}
-%\newcommand\cK{{\mathcal{K}}}
-%\newcommand\cL{{\mathcal{L}}}
-%\newcommand\cM{{\mathcal{M}}}
-%\newcommand\cN{{\mathcal{N}}}
-%\newcommand\cO{{\mathcal{O}}}
-%\newcommand\cP{{\mathcal{P}}}
-%\newcommand\cQ{{\mathcal{Q}}}
-%\newcommand\cR{{\mathcal{R}}}
-%\newcommand\cS{{\mathcal{S}}}
-%\newcommand\cT{{\mathcal{T}}}
-%\newcommand\cU{{\mathcal{U}}}
-%\newcommand\cV{{\mathcal{V}}}
-%\newcommand\cW{{\mathcal{W}}}
-%\newcommand\cX{{\mathcal{X}}}
-%\newcommand\cY{{\mathcal{Y}}}
-%\newcommand\cZ{{\mathcal{Z}}}
-
-%% mathbb sets
-%\newcommand\bbA{{\mathbb{A}}}
-%\newcommand\bbB{{\mathbb{B}}}
-%\newcommand\bbC{{\mathbb{C}}}
-%\newcommand\bbD{{\mathbb{D}}}
-%\newcommand\bbE{{\mathbb{E}}}
-%\newcommand\bbF{{\mathbb{F}}}
-%\newcommand\bbG{{\mathbb{G}}}
-%\newcommand\bbH{{\mathbb{H}}}
-%\newcommand\bbI{{\mathbb{I}}}
-%\newcommand\bbJ{{\mathbb{J}}}
-%\newcommand\bbK{{\mathbb{K}}}
-%\newcommand\bbL{{\mathbb{L}}}
-%\newcommand\bbM{{\mathbb{M}}}
-%\newcommand\bbN{{\mathbb{N}}}
-%\newcommand\bbO{{\mathbb{O}}}
-%\newcommand\bbP{{\mathbb{P}}}
-%\newcommand\bbQ{{\mathbb{Q}}}
-%\newcommand\bbR{{\mathbb{R}}}
-%\newcommand\bbS{{\mathbb{S}}}
-%\newcommand\bbT{{\mathbb{T}}}
-%\newcommand\bbU{{\mathbb{U}}}
-%\newcommand\bbV{{\mathbb{V}}}
-%\newcommand\bbW{{\mathbb{W}}}
-%\newcommand\bbX{{\mathbb{X}}}
-%\newcommand\bbY{{\mathbb{Y}}}
-%\newcommand\bbZ{{\mathbb{Z}}}
 
 \newcommand\ones{\bm{1}}
 \newcommand\zeros{\bm{0}}
